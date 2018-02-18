@@ -29,7 +29,7 @@ gem 'nearest_time_zone'
 gem 'rack-cors'
 
 group :production do
-  gem 'pg'
+  gem 'pg', '~> 0.21'
   gem 'newrelic_rpm'
   gem 'sentry-raven'
   gem 'rack-timeout'
@@ -37,7 +37,7 @@ end
 
 if ENV['FORCE_POSTGRES']
   group :development, :test do
-    gem 'pg'
+    gem 'pg', '~> 0.21'
   end
 end
 
@@ -60,7 +60,8 @@ group :development do
 end
 
 group :test, :development do
-  gem 'jasmine'
+  gem 'jasmine', '~> 2.5.2'
+  gem 'jasmine-core', '~> 2.5.2'
   gem 'jasmine-jquery-rails'
   gem 'sqlite3'
   gem 'rspec-rails'
