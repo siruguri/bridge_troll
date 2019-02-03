@@ -71,8 +71,8 @@ end
 
 group :test do
   gem 'webmock'
-  gem 'factory_bot_rails'
-  gem 'capybara'
+  gem 'factory_bot_rails', '4.8.2'
+  gem 'capybara', '2.13.0'
   gem 'poltergeist', require: false
   gem 'selenium-webdriver', require: false
   gem 'launchy'
