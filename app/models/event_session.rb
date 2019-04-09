@@ -30,7 +30,7 @@ class EventSession < ActiveRecord::Base
 
   after_create :update_counter_cache
   after_save do
-    update_counter_cache if location_id_changed?
+    update_counter_cache if saved_change_to_location_id?
   end
   after_destroy :update_counter_cache
 
@@ -75,8 +75,8 @@ class EventSession < ActiveRecord::Base
 
   def update_counter_cache
     location.try(:reset_events_count)
-    if location_id_changed? && location_id_was
-      Location.find(location_id_was).reset_events_count
+    if saved_change_to_location_id? && location_id_before_last_save
+      Location.find(location_id_before_last_save).reset_events_count
     end
   end
 end

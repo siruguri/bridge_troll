@@ -7,12 +7,16 @@ class Role < ActiveHash::Base
   ]
   enum_accessor :name
 
+  def self.organizer_id
+    Role.find_by(title: 'Organizer').id
+  end
+
   def self.attendee_role_ids
-    [Role::VOLUNTEER.id, Role::STUDENT.id]
+    [Role.find_by(title: 'Volunteer').id, Role.find_by(title: 'Student').id]
   end
 
   def self.attendee_role_ids_with_organizers
-    [Role::VOLUNTEER.id, Role::STUDENT.id, Role::ORGANIZER.id]
+    [Role.find_by(title: 'Volunteer').id, Role.find_by(title: 'Student').id, Role.find_by(title: 'Organizer').id]
   end
 
   def self.empty_attendance

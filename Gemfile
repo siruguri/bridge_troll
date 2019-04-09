@@ -4,8 +4,9 @@ ruby '2.5.3'
 
 gem 'dotenv-rails', groups: [:development, :test]
 
-gem 'rails', '~> 5.0.0'
+gem 'rails', '~> 5.1.0'
 gem 'devise', '~> 4.4.3'
+gem "actionview", ">= 5.0.7.2"
 gem 'pundit'
 gem 'puma'
 gem 'jquery-rails'

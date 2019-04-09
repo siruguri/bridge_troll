@@ -8,14 +8,14 @@ class Event < ActiveRecord::Base
   after_initialize :set_defaults
   before_validation :normalize_allowed_operating_system_ids
   after_save do |event|
-    if student_rsvp_limit_changed? || volunteer_rsvp_limit_changed?
+    if saved_change_to_student_rsvp_limit? || saved_change_to_volunteer_rsvp_limit?
       WaitlistManager.new(event).reorder_waitlist!
     end
   end
 
   after_create :update_location_counts
   after_save do
-    update_location_counts if location_id_changed?
+    update_location_counts if saved_change_to_location_id?
   end
   after_destroy :update_location_counts
 
@@ -239,7 +239,7 @@ class Event < ActiveRecord::Base
     else
       includes(:rsvps).where(
         '(rsvps.role_id = ? AND rsvps.user_id = ?) OR (current_state = ?) OR (chapter_id IN (?))',
-        Role::ORGANIZER,
+        Role.organizer_id,
         user.id,
         Event.current_states[:published],
         user.chapter_leaderships.pluck(:chapter_id)
@@ -435,8 +435,8 @@ class Event < ActiveRecord::Base
 
   def update_location_counts
     location.try(:reset_events_count)
-    if location_id_changed? && location_id_was
-      Location.find(location_id_was).reset_events_count
+    if saved_change_to_location_id? && location_id_before_last_save
+      Location.find(location_id_before_last_save).reset_events_count
     end
   end
 end
