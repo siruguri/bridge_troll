@@ -61,6 +61,11 @@ group :development do
 end
 
 group :test, :development do
+  gem 'pry'
+  gem 'pry-rescue'
+  gem 'pry-remote'
+  gem 'pry-stack_explorer'
+  gem 'pry-byebug'
   gem 'jasmine', '~> 2.6.0'
   gem 'jasmine-jquery-rails'
   gem 'sqlite3'
