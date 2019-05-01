@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-  - 2.5.3
+  - 2.6.3
 bundler_args: "--without development --without production --deployment"
 cache:
   bundler: true
@@ -9,14 +9,13 @@ cache:
     - vendor/assets/bower_components
 env:
   global:
-    - "PATH=$PWD/node_modules/.bin:$PATH"
+    - "PATH=$HOME/.rvm/rubies/ruby-2.6.3/bin:$PWD/node_modules/.bin:$PATH"
   matrix:
     - FORCE_POSTGRES=true
     - DO_NOT_FORCE_POSTGRES=true
 before_install:
   - 'npm install'
   - 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc'
-  - "rvm @global do gem install bundler"
 before_script:
   - 'bundle exec rake bower:install:development'
   - "./config/before-travis.sh"
